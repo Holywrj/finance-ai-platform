@@ -13,6 +13,10 @@ class Settings(BaseSettings):
     database_url: str
     database_echo: bool = False
 
+    jwt_secret_key: str
+    jwt_algorithm: str = "HS256"
+    jwt_access_token_expire_minutes: int = 30
+
     model_config = SettingsConfigDict(
         env_file=BASE_DIR / ".env",
         env_file_encoding="utf-8",
