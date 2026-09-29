@@ -194,7 +194,7 @@ Use short-lived branches for development:
 Typical workflow:
 
 ```text
-Issue
+Task
   ↓
 Feature / Fix branch
   ↓
@@ -202,11 +202,11 @@ Implementation
   ↓
 Tests / Verification
   ↓
-Push
+Review
+  ↓
+Commit / Push
   ↓
 Pull Request
-  ↓
-Review
   ↓
 Merge into main
 ```
@@ -236,3 +236,80 @@ Do not invent:
 * Features that have not yet been implemented
 
 When documentation and implementation disagree, inspect the code and report the discrepancy rather than silently assuming one is correct.
+
+---
+
+## 10. Project Structure and Backend Conventions
+
+The project structure is designed and controlled by the human developer.
+
+AI Agents must not independently redesign, reorganize, or expand the project directory structure.
+
+Unless the current task explicitly requires it:
+
+* Do not create new directories.
+* Do not create new files.
+* Do not delete or rename files or directories.
+* Do not introduce new architectural layers or abstractions.
+* Follow the existing repository structure.
+
+The backend application is rooted at `backend/`.
+
+The Python application package is:
+
+```text
+backend/app/
+```
+
+Backend application code should use `app.*` imports.
+
+The expected local backend working directory is:
+
+```text
+backend/
+```
+
+The expected development server command is:
+
+```bash
+uvicorn app.main:app --reload
+```
+
+Do not change the backend import boundary or project root convention unless explicitly required by the task.
+
+---
+
+## 11. Dependency, File Scope, and Git Execution Rules
+
+Before modifying backend Python code:
+
+1. Read `backend/requirements.txt` and use the versions available in the current project environment as the primary dependency reference.
+2. Do not use APIs based on memory or assumptions about a different dependency version.
+3. If the required implementation is incompatible with the current dependency version, report the specific version issue before changing the dependency.
+4. Do not install, upgrade, downgrade, or add a dependency without explicit approval.
+5. When a new dependency is genuinely required, explain:
+
+   * the dependency name;
+   * why it is required;
+   * the expected impact;
+   * any relevant version compatibility concerns.
+6. After an approved dependency change is installed and verified, update `backend/requirements.txt`.
+
+For each coding task:
+
+* Modify only the files explicitly requested or clearly required by the task.
+* Do not make unrelated changes.
+* Do not create additional files merely for convenience.
+* Do not perform broad refactoring unless explicitly requested.
+
+AI Agents must not execute Git operations that change repository history or remote state unless explicitly authorized in the current task.
+
+In particular:
+
+* Do not create commits automatically.
+* Do not push branches automatically.
+* Do not merge pull requests automatically.
+* Do not force-push.
+* Do not modify GitHub repository settings.
+
+The human developer decides when changes are ready to commit, push, review, or merge.
