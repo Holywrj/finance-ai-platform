@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: finance-ai-postgres
+    environment:
+      POSTGRES_DB: finance_ai
+      POSTGRES_USER: finance_ai
+      POSTGRES_PASSWORD: finance_ai
+    ports:
+      - "5434:5432"
+    volumes:
+      - finance_ai_postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  finance_ai_postgres_data:

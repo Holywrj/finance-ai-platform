@@ -10,6 +10,9 @@ class Settings(BaseSettings):
     app_name: str = "Finance AI Platform"
     debug: bool = False
 
+    database_url: str
+    database_echo: bool = False
+
     model_config = SettingsConfigDict(
         env_file=BASE_DIR / ".env",
         env_file_encoding="utf-8",
